@@ -3,12 +3,14 @@ import certifi
 from pymongo import MongoClient
 from dotenv import load_dotenv
 
+# Load variables from the hidden .env file
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
 
+# CRITICAL FIX: Removed the hardcoded fallback password string to keep it completely hidden
 if not MONGO_URI:
-    MONGO_URI = "mongodb+srv://jus4802_db_user:3NXU4QgYnNnCFNOG@cluster0.fhfdi9z.mongodb.net/?appName=Cluster0"
+    raise ValueError("❌ CRITICAL ERROR: MONGO_URI is missing from your environment variables!")
 
 try:
     client = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
